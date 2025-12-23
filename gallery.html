@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gallery - The Qatar Talks</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+
+  <div id="header-container"></div>
+
+  <!-- Gallery Content -->
+  <section class="section gallery-page-section" style="padding-top: 260px; min-height: 80vh;">
+    <div class="container">
+      <h1 style="color: var(--color-primary); margin-bottom: 1rem; text-align: center;">Full Gallery</h1>
+      <p style="text-align: center; margin-bottom: 3rem; color: #666;">Explore moments from our previous contests.</p>
+
+      <div class="gallery-grid" id="gallery-grid"
+        style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem;">
+        <!-- Images will be injected here by JS -->
+      </div>
+
+      <div style="text-align: center; margin-top: 3rem; display: flex; justify-content: center; gap: 1rem;">
+        <a href="https://drive.google.com/drive/folders/1SVtpJJY5CjZ5mU3IBRsVfWjbuA6UgTvJ?usp=share_link"
+          target="_blank" class="btn btn-primary"
+          style="color: white; padding: 12px 24px; border-radius: 5px; text-decoration: none; font-weight: 500;">
+          <i class="fab fa-google-drive" style="margin-right: 8px;"></i> View Full Archive on Drive
+        </a>
+        <a href="index.html" class="btn btn-outline-primary"
+          style="border: 2px solid var(--color-primary); color: var(--color-primary); padding: 10px 24px; border-radius: 5px; text-decoration: none; font-weight: 500;">
+          Back to Home
+        </a>
+      </div>
+
+      <script src="assets/js/gallery-data.js"></script>
+      <script>
+        const galleryGrid = document.getElementById('gallery-grid');
+
+        // Check if galleryImageIds is defined (loaded from external file)
+        const idsToLoad = (typeof galleryImageIds !== 'undefined') ? galleryImageIds : [];
+
+        idsToLoad.forEach(id => {
+          const div = document.createElement('div');
+          div.className = 'gallery-item-wrapper';
+          div.style.cssText = `
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+            aspect-ratio: 4/3;
+            background-color: #f0f0f0;
+            position: relative;
+          `;
+
+          // Hover effect setup
+          div.onmouseenter = () => div.style.transform = 'translateY(-5px)';
+          div.onmouseleave = () => div.style.transform = 'translateY(0)';
+
+          const img = document.createElement('img');
+          // Using drive.google.com/thumbnail for display
+          img.src = `https://drive.google.com/thumbnail?id=${id}&sz=w600`;
+          img.loading = 'lazy';
+          img.style.cssText = `
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+          `;
+
+          // Add click to view full size
+          const link = document.createElement('a');
+          link.href = `https://drive.google.com/file/d/${id}/view`;
+          link.target = '_blank';
+          link.style.display = 'block';
+          link.style.height = '100%';
+          link.style.width = '100%';
+
+          link.appendChild(img);
+          div.appendChild(link);
+          galleryGrid.appendChild(div);
+        });
+      </script>
+    </div>
+  </section>
+  <br><br>
+  <div id="footer-container"></div>
+  <script src="assets/js/layout.js"></script>
+
+  <!-- Scripts -->
+
+</body>
+
+</html>
